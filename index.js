@@ -94,7 +94,7 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
         `)
         .setColor('#00D4AA')
         .setFooter({ 
-          text: 'Made with ❤️ by MP38102',
+          text: 'Made with ❤️ by MP38102',}); 
 
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
