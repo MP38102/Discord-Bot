@@ -11,8 +11,8 @@ const client = new Client({
 
 const commands = [
   new SlashCommandBuilder()
-    .setName('active-dev-badge')
-    .setDescription('Start your 24hr Active Developer Badge timer!'),
+    .setName('info')
+    .setDescription('über den Bot'),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -30,10 +30,10 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
       console.log(`Logged in as ${client.user.tag}`);
       
       // Set bot's status
-      client.user.setActivity('chill with manish', { type: 3 }); // Type 3 is "Watching"
+      client.user.setActivity('Bot sein', { type: 3 }); // Type 3 is "Watching"
       
       // Set bot's about me with watermark
-      const watermark = "Made with ❤️ by Manish | Active Developer Badge Bot | Get your badge in 24 hours!";
+      const watermark = "BOT";
       
       // Function to ensure watermark stays
       const ensureWatermark = async () => {
@@ -57,7 +57,7 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 
     client.on(Events.InteractionCreate, async interaction => {
       if (!interaction.isChatInputCommand()) return;
-      if (interaction.commandName !== 'active-dev-badge') return;
+      if (interaction.commandName !== 'info') return;
 
       const userId = interaction.user.id;
       let userTimers = {};
@@ -88,58 +88,19 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
       }
 
       const embed = new EmbedBuilder()
-        .setTitle('🚀 Active Developer Badge Timer')
+        .setTitle('🚀 Über den Bot')
         .setDescription(`
-        **Congratulations!** Your 24-hour timer has been activated.
-        
-        ⏰ **Timer Ends:** ${timeLeft}
-        
-        Once the timer completes, click the button below to claim your **Active Developer Badge**!
+        **BOT von MP38102** 
         `)
-        .addFields(
-          { 
-            name: '📋 Instructions', 
-            value: `
-            • Wait for the full 24 hours to pass
-            • Click the "Claim Badge" button below
-            • Complete the verification process
-            • Enjoy your new badge! 🎉
-            `, 
-            inline: false 
-          },
-          { 
-            name: '⚡ Quick Links', 
-            value: `
-            🔗 [Developer Portal](https://discord.com/developers/applications)
-            📚 [Our website](https://roxy-selfbot.vercel.app/)
-            💡 [Support Server](https://discord.gg/hZf4j8GzzK)
-            `, 
-            inline: true 
-          },
-          { 
-            name: '🎯 Badge Benefits', 
-            value: `
-            ✨ Exclusive profile badge
-            🎖️ Community status
-            🚀 flex maybe
-            `, 
-            inline: true 
-          }
-        )
         .setColor('#00D4AA')
-        .setThumbnail('https://cdn.discordapp.com/attachments/1395245783808348331/1400354191624372375/0d02b202baf618dc122475bf70350fd9.png') 
         .setFooter({ 
-          text: '🔥 Active Developer Badge bot | Made with ❤️ by Manish',
-          iconURL: 'https://cdn.discordapp.com/attachments/1332936607267033138/1400353273906593844/image_8.png' 
-        })
-        .setTimestamp()
-        .setImage('https://cdn.discordapp.com/attachments/1395245783808348331/1400351640028053556/20250731_102557.png');
+          text: 'Made with ❤️ by MP38102',
 
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setLabel('🏆 Claim Your Badge')
+          .setLabel('Github')
           .setStyle(ButtonStyle.Link)
-          .setURL('https://discord.com/developers/active-developer')
+          .setURL('https://github.com/MP38102/Discord-Bot')
       );
 
       await interaction.reply({ 
