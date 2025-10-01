@@ -93,7 +93,7 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
   } catch (err) {
     console.error(err);
   }
-})();
+
  client.on(Events.InteractionCreate, async interaction => {
       if (!interaction.isChatInputCommand()) return;
       if (interaction.commandName !== 'Test') return;
