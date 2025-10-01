@@ -13,6 +13,9 @@ const commands = [
   new SlashCommandBuilder()
     .setName('info')
     .setDescription('über den Bot'),
+   new SlashCommandBuilder()
+    .setName('Test')
+    .setDescription('Test'),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -45,7 +48,7 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
           console.error('Failed to update application description:', error);
         }
       };
-
+  
       // Set initial watermark
       await ensureWatermark();
       
@@ -61,32 +64,7 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 
       const userId = interaction.user.id;
       let userTimers = {};
-      
-      // Read existing timers
-      try {
-        userTimers = JSON.parse(fs.readFileSync('./userTimers.json'));
-      } catch (error) {
-        console.error('Error reading timer file:', error);
-      }
-
-      const now = Date.now();
-      let future;
-      let timeLeft;
-
-      // Check if user already has an active timer
-      if (userTimers[userId] && userTimers[userId] > now) {
-        future = userTimers[userId];
-        timeLeft = `<t:${Math.floor(future / 1000)}:R>`;
-      } else {
-        // Set new timer
-        future = now + 24 * 60 * 60 * 1000;
-        timeLeft = `<t:${Math.floor(future / 1000)}:R>`;
-        userTimers[userId] = future;
-        
-        // Save to file
-        fs.writeFileSync('./userTimers.json', JSON.stringify(userTimers, null, 2));
-      }
-
+          
       const embed = new EmbedBuilder()
         .setTitle('🚀 Über den Bot')
         .setDescription(`
@@ -95,6 +73,42 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
         .setColor('#00D4AA')
         .setFooter({ 
           text: 'Made with ❤️ by MP38102',}); 
+
+      const row = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setLabel('Github')
+          .setStyle(ButtonStyle.Link)
+          .setURL('https://github.com/MP38102/Discord-Bot')
+      );
+
+      await interaction.reply({ 
+        embeds: [embed], 
+        components: [row],
+        ephemeral: false 
+      });
+    });
+
+    client.login(TOKEN);
+
+  } catch (err) {
+    console.error(err);
+  }
+})();
+ client.on(Events.InteractionCreate, async interaction => {
+      if (!interaction.isChatInputCommand()) return;
+      if (interaction.commandName !== 'Test') return;
+
+      const userId = interaction.user.id;
+      let userTimers = {};
+          
+      const embed = new EmbedBuilder()
+        .setTitle('Test')
+        .setDescription(`
+        **Test** 
+        `)
+        .setColor('#00D4AA')
+        .setFooter({ 
+          text: 'Test',}); 
 
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
